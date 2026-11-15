@@ -1,0 +1,12 @@
+{
+  "name": "lankanweb-static",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node -e \"import('http').then(({default:h})=>import('fs').then(({default:f})=>import('path').then(({default:p})=>{const m={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.xml':'application/xml','.txt':'text/plain','.json':'application/json'};const port=Number(process.env.PORT||3000);h.createServer((q,s)=>{let u=(q.url||'/').split('?')[0];if(u==='/')u='/index.html';const fp=p.resolve('.'+u);if(!fp.startsWith(p.resolve('.'))||!f.existsSync(fp)||f.statSync(fp).isDirectory()){s.writeHead(404);return s.end('Not found');}s.writeHead(200,{'Content-Type':m[p.extname(fp)]||'application/octet-stream'});f.createReadStream(fp).pipe(s);}).listen(port,'0.0.0.0',()=>console.log('Static server running at http://0.0.0.0:'+port));})))\"",
+    "build": "node -e \"import('fs').then(({default:f})=>{f.rmSync('dist',{recursive:true,force:true});f.mkdirSync('dist',{recursive:true});for(const item of ['index.html','robots.txt','sitemap.xml','assets']){f.cpSync(item,'dist/'+item,{recursive:true});}console.log('Static build ready in dist/');})\"",
+    "start": "npm run dev",
+    "lint": "node -e \"import('fs').then(({default:f})=>import('child_process').then(({execFileSync:e})=>{for(const file of f.readdirSync('assets/js')){if(file.endsWith('.js'))e('node',['--check','assets/js/'+file],{stdio:'inherit'});}console.log('All JS files valid');}))\""
+  }
+}

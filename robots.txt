@@ -1,0 +1,5 @@
+# LankanWeb robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://lankanweb.lk/sitemap.xml
